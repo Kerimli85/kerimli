@@ -19,6 +19,6 @@ public class ProductModel {
 	private Double cost;
 	private String description;
 	private Integer quantity;
-	
+
 
 }

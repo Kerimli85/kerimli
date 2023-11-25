@@ -39,18 +39,18 @@ public class ProductRestController {
 	public List<ProductModel> findAll() {
 		return productRepo.findAll();
 	}
-	
+
 	// update
 	@PutMapping
 	public ProductModel update(@RequestBody ProductModel productModel) {
 			return productService.updateProduct(productModel);
-		
+
 	}
-	
+
 	// delete
 	@DeleteMapping(path = "/{id}")
 	public void deleteById(@PathVariable Integer id) {
 		productRepo.deleteById(id);
 	}
-	
+
 }

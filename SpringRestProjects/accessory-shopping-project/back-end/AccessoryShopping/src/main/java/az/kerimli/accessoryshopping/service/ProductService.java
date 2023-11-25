@@ -20,5 +20,5 @@ public class ProductService {
 	public ProductModel updateProduct(ProductModel productModel) {
 		return productRepo.save(productModel);
 	}
-	
+
 }
