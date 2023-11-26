@@ -13,7 +13,7 @@
 
 <body>
     <div style="width: 30%; margin: auto;">
-        <form>
+        <form onsubmit="onSaveProduct(event)">
             <div class="form-group">
                 <label for="product-name">Ad</label>
                 <input id="product-name" class="form-control">
@@ -49,6 +49,26 @@
             </tbody>
         </table>
     </div>
+
+
+    <!--burada sehifenin yenilenmesinin qarsisini aldiq-->
+    <script>
+        function onSaveProduct(event) {
+            event.preventDefault();
+            var productName = document.getElementById('product-name').value;
+            var productDescription = document.getElementById('product-description').value;
+       
+            var productObject={};
+            productObject.name=productName;
+            productObject.description=productDescription;
+
+            var http=new XMLHttpRequest();
+            http.open("POST", "http://localhost:8585/products", true);
+            http.setRequestHeader("Content-Type", "application/json");
+            http.send(JSON.stringify(productObject));
+
+        }
+    </script>
 </body>
 
 </html>
