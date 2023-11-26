@@ -36,16 +36,8 @@
                     <th>Detallar</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Elfbar</td>
-                    <td>10000 TUSDU</td>
-                    <td>
-                        <button class="btn btn-danger">Sil</button>
-                        <button class="btn btn-primary">Redakte</button>
-                    </td>
-                </tr>
+            <tbody id="products-tbody">
+
             </tbody>
         </table>
     </div>
@@ -57,18 +49,53 @@
             event.preventDefault();
             var productName = document.getElementById('product-name').value;
             var productDescription = document.getElementById('product-description').value;
-       
-            var productObject={};
-            productObject.name=productName;
-            productObject.description=productDescription;
 
-            var http=new XMLHttpRequest();
+            var productObject = {};
+            productObject.name = productName;
+            productObject.description = productDescription;
+
+            var http = new XMLHttpRequest();
+
+            http.onload = function () {
+                loadAllProducts();
+            }
+
             http.open("POST", "http://localhost:8585/products", true);
             http.setRequestHeader("Content-Type", "application/json");
             http.send(JSON.stringify(productObject));
 
         }
+        function loadAllProducts() {
+
+            var http = new XMLHttpRequest();
+
+            http.onload = function () {
+                var response = this.responseText;
+                var productsArray = JSON.parse(response);
+                fillProductsTable(productsArray);
+            }
+
+            http.open("GET", "http://localhost:8585/products", true);
+            http.send();
+        }
+        function fillProductsTable(products) {
+            var productsTbodyElement = document.getElementById('products-tbody');
+
+            var productsTbodyHtml = "";
+            for (var i = 0; i < products.length; i++) {
+                var product = products[i];
+                productsTbodyHtml += "<tr><td>" + product.id + "</td>";
+                productsTbodyHtml += "<td>" + product.name + "</td>";
+                productsTbodyHtml += "<td>" + product.description + "</td>s";
+                productsTbodyHtml += "<td><button class = 'btn btn-danger'>Sil</button>"
+                productsTbodyHtml += "<button class = 'btn btn-primary'>Redaktə</button></td></tr>";
+            }
+            productsTbodyElement.innerHTML = productsTbodyHtml;
+        }
+
+        loadAllProducts();
     </script>
+
 </body>
 
 </html>
