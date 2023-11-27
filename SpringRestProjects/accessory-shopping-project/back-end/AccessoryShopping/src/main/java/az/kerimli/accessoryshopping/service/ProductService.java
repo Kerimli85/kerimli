@@ -13,11 +13,6 @@ public class ProductService {
 	private ProductRepo productRepo;
 
 	public ProductModel saveProduct(ProductModel productModel) {
-		productModel.setId(null);
-		return productRepo.save(productModel);
-	}
-
-	public ProductModel updateProduct(ProductModel productModel) {
 		return productRepo.save(productModel);
 	}
 
