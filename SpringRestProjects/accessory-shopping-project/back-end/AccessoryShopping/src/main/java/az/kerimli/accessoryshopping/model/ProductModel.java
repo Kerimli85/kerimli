@@ -15,10 +15,12 @@ public class ProductModel {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String name;
-	private Double price;
-	private Double cost;
 	private String description;
 	private Integer quantity;
+	private Double cost;
+	private Double price;
+	
+	
 
 
 }

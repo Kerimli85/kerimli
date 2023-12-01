@@ -4,21 +4,36 @@
 <head>
     <meta charset="UTF-8">
     <title>Aksesuarlar</title>
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-
-    <style>
-        #header-text {
-            color: green;
-        }
-    </style>
-
+    <link rel="stylesheet" href="css/products.css">
 </head>
 
 <body>
+
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="shopping.html">Ana Sehife</a>
+                </li>
+                <li>
+                    <a class="nav-link" href="products.html">Alis Veris Sehifesi</a>
+                </li>
+               
+            </ul>
+        </div>
+    </nav>
+
     <div style="width: 30%; margin: auto;">
         <h3 id="header-text"></h3>
         <form onsubmit="onSaveProduct(event)">
@@ -30,18 +45,35 @@
                 <label for="product-description">Detallar</label>
                 <input id="product-description" class="form-control">
             </div>
+            <div class="form-group">
+                <label for="product-quantity">Sayi</label>
+                <input id="product-quantity" class="form-control" type="number">
+            </div>
+            <div class="form-group">
+                <label for="product-cost">Maya Deyeri</label>
+                <input id="product-cost" class="form-control" type="text" pattern="\d+(\.\d{1,2})?">
+            </div>
+            <div class="form-group">
+                <label for="product-price">Satis Qiymeti</label>
+                <input id="product-price" class="form-control" type="text" pattern="\d+(\.\d{1,2})?">
+            </div>
+
             <input type="submit" value="Yadda Saxla" class="btn btn-success">
 
         </form>
     </div>
     <hr>
     <div class="container">
-        <table class="table table-bordered">
-            <thead>
+        <table class="table table-bordered table-hover">
+            <thead class="thead-dark">
                 <tr>
                     <th>Kod</th>
                     <th>Ad</th>
-                    <th>Detallar</th>
+                    <th id="table-description">Detallar</th>
+                    <th>Sayi</th>
+                    <th>Maya Deyeri</th>
+                    <th>Satis Qiymeti</th>
+                    <th>Emeliyyatlar</th>
                 </tr>
             </thead>
             <tbody id="products-tbody">
@@ -49,99 +81,7 @@
             </tbody>
         </table>
     </div>
-
-
-    <!--burada sehifenin yenilenmesinin qarsisini aldiq-->
-    <script>
-        var selectedProductId = 0;
-
-        function onSaveProduct(event) {
-            event.preventDefault();
-            var productName = document.getElementById('product-name').value;
-            var productDescription = document.getElementById('product-description').value;
-
-            var productObject = {};
-            productObject.id = selectedProductId;
-            productObject.name = productName;
-            productObject.description = productDescription;
-
-            var http = new XMLHttpRequest();
-
-            http.onload = function () {
-                selectedProductId = 0;
-                setHeaderText('Yeni Aksesuar Qeydiyyati');
-                loadAllProducts();
-            }
-           
-            http.open("POST", "http://localhost:8585/products", true);
-            http.setRequestHeader("Content-Type", "application/json");
-            http.send(JSON.stringify(productObject));
-
-        }
-        function loadAllProducts() {
-
-            var http = new XMLHttpRequest();
-
-            http.onload = function () {
-                var response = this.responseText;
-                var productsArray = JSON.parse(response);
-                fillProductsTable(productsArray);
-            }
-
-            http.open("GET", "http://localhost:8585/products", true);
-            http.send();
-        }
-        function fillProductsTable(products) {
-            var productsTbodyElement = document.getElementById('products-tbody');
-
-            var productsTbodyHtml = "";
-            for (var i = 0; i < products.length; i++) {
-                var product = products[i];
-                productsTbodyHtml += "<tr><td>" + product.id + "</td>";
-                productsTbodyHtml += "<td>" + product.name + "</td>";
-                productsTbodyHtml += "<td>" + product.description + "</td>";
-
-                productsTbodyHtml += "<td><button class = 'btn btn-danger' onclick = 'onDeleteProduct("
-                    + product.id + ")' >Sil</button> ";
-                productsTbodyHtml += "<button class = 'btn btn-primary' onclick = 'onEditProduct("
-                    + product.id + ")'>Redaktə</button></td></tr>";
-            }
-            productsTbodyElement.innerHTML = productsTbodyHtml;
-        }
-
-        loadAllProducts();
-
-        function onDeleteProduct(productId) {
-            if (confirm('silmeye eminsiniz ?')) {
-                var http = new XMLHttpRequest();
-                http.onload = function () {
-                    loadAllProducts();
-                }
-                http.open("DELETE", "http://localhost:8585/products/" + productId, true);
-                http.send();
-            }
-        }
-
-        function onEditProduct(productId) {
-            selectedProductId = productId;
-            setHeaderText('Aksesuar Redaktesi, id = ' + productId);
-            var http = new XMLHttpRequest();
-            http.onload = function () {
-                var response = this.responseText;
-                var productObject = JSON.parse(response);
-                document.getElementById('product-name').value = productObject.name;
-                document.getElementById('product-description').value = productObject.description;
-            }
-            http.open("GET", "http://localhost:8585/products/" + productId, true);
-            http.send();
-        }
-
-        function setHeaderText(text) {
-            document.getElementById('header-text').innerHTML = text;
-        }
-
-        setHeaderText('Yeni Aksesuar Qeydiyyati');
-    </script>
+    <script src="js/products.js"></script>
 </body>
 
 </html>
