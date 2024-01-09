@@ -63,8 +63,8 @@ function fillProductsTable(products) {
         productsTbodyHtml += "<td>" + product.name + "</td>";
         productsTbodyHtml += "<td>" + product.description + "</td>";
         productsTbodyHtml += "<td>" + product.quantity + "</td>";
-        productsTbodyHtml += "<td>" + product.cost + "</td>";
-        productsTbodyHtml += "<td>" + product.price + "</td>";
+        productsTbodyHtml += "<td>" + product.cost + " ₼" + "</td>";
+        productsTbodyHtml += "<td>" + product.price + " ₼" + "</td>";
 
 
 
@@ -91,6 +91,7 @@ function onDeleteProduct(productId) {
 
 function onEditProduct(productId) {
     selectedProductId = productId;
+    
     setHeaderText('Aksesuar Redaktesi, id = ' + productId);
     var http = new XMLHttpRequest();
     http.onload = function () {
@@ -99,6 +100,8 @@ function onEditProduct(productId) {
         productNameInput.value = productObject.name;
         productDescriptionInput.value = productObject.description;
         productQuantityInput.value = productObject.quantity;
+        productCostInput.value = productObject.cost;
+        productPriceInput.value = productObject.price;
     }
     http.open("GET", API_URL + "/products/" + productId, true);
     http.send();

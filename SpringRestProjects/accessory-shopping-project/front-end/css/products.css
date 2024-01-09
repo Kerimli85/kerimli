@@ -19,14 +19,8 @@ td {
 .container {
     max-width: 1200px;
     /* Tablonun maksimum genişliği */
-    margin: 0 auto;
+    margin:  auto;
     /* Sayfayı ortalamak için */
     overflow-x: auto;
     /* Yatay kaydırma çubuğunu etkinleştir */
-}
-
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
 }
