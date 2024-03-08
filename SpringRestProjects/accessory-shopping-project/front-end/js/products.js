@@ -111,4 +111,4 @@ function setHeaderText(text) {
     headerTextElement.innerHTML = text;
 }
 
-setHeaderText('Yeni Aksesuar Qeydiyyati');
+setHeaderText('Yeni Telefon Qeydiyyati');

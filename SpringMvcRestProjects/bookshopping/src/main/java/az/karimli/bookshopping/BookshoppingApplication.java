@@ -1,13 +1,13 @@
-package az.kerimli.accessoryshopping;
+package az.karimli.bookshopping;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class AccessoryShoppingApplication {
+public class BookshoppingApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(AccessoryShoppingApplication.class, args);
+		SpringApplication.run(BookshoppingApplication.class, args);
 	}
- 
+
 }
