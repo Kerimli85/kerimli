@@ -9,7 +9,7 @@ table, th, td {
 
 table {
 	border-collapse: collapse;
-	width: 100%
+	width: 100%;
 }
 
 th {
@@ -24,14 +24,28 @@ td {
 }
 
 td:hover {
-	
 	color: blue;
+	cursor: pointer;
+}
+
+#new-book-button {
+	display: block;
+	padding: 5px 10px;
+	width: 150px;
+	text-align: center;
+	border-radius: 10px;
+	background-color: #04AA6D;
+	text-decoration: none;
+}
+
+#new-book-button:hover {
+	background-color: #3e8e41;
 	cursor: pointer;
 }
 </style>
 </head>
 <body>
-
+	<a th:href="@{/books/new}" id="new-book-button">Yeni kitab</a>
 
 	<table>
 		<thead>
