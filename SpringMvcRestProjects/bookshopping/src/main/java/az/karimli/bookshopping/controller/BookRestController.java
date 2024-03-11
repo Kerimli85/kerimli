@@ -12,7 +12,7 @@ import az.karimli.bookshopping.dao.BookDAO;
 import az.karimli.bookshopping.model.Book;
 
 @RestController
-@RequestMapping(path = "/books")
+@RequestMapping(path = "/rest/books")
 public class BookRestController {
 
 	@Autowired
